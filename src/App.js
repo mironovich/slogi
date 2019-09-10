@@ -1,26 +1,55 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import { useState } from 'react'
 
-function App() {
+export default () => {
+  const consonants = [
+    'Б',
+    'В',
+    'Г',
+    'Д',
+    'Ж',
+    'З',
+    'К',
+    'Л',
+    'М',
+    'Н',
+    'П',
+    'Р',
+    'С',
+    'Т',
+    'Ф',
+    'Х',
+    'Ц',
+    'Ч',
+    'Ш',
+    'Щ',
+  ]
+  const vowels = ['А', 'Е', 'Ё', 'И', 'О', 'У', 'Ы', 'Э', 'Ю', 'Я']
+
+  const getRandomInt = max => {
+    return Math.floor(Math.random() * Math.floor(max))
+  }
+
+  const newSlog = () => {
+    const t =
+      consonants[getRandomInt(consonants.length)] +
+      vowels[getRandomInt(vowels.length)]
+    return t
+  }
+
+  const downHandler = ({ key }) => {
+    if (key === ' ') {
+      setSlog(newSlog())
+      window.removeEventListener('keydown', downHandler)
+    }
+  }
+  const [slog, setSlog] = useState('...')
+
+  window.addEventListener('keydown', downHandler)
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div className="container">
+      <p className="slog">{slog}</p>
     </div>
-  );
+  )
 }
-
-export default App;
